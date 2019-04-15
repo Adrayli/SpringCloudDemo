@@ -1,0 +1,9 @@
+spring:
+  profiles:
+    active: dev #这个的dev表示，git上ordr-dev.yml的后半段
+  cloud:
+    config:
+      uri:  http://localhost:20000  #config-server地址
+      label: master #git上的Branch
+  application:
+    name: order #这个order表示，git上order-dev.yml的前半段

@@ -1,0 +1,26 @@
+server:
+  port: 8000
+  
+spring:
+  application:
+    name: getway
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://seq:123@eurekaserver1:8761/eureka/
+  instance:
+    instance-id: ${spring.application.name}:${server.port}
+zuul:
+  ignoredServices: order  #设置某些服务不需要进行反向代理，多个服务逗号隔开
+  routes:
+    order: /od/**   #对某个服务自定义路由规则
+    serviceId: order  #这个配置可以实现服务的负载均衡，默认是轮询
+  prefix: /api  #配置服务的前缀  
+#负载均衡也可以用下面的形式
+#ribbon:
+#  eureka:
+#    enable: false
+#order:
+#  ribbon:
+#    listOfServers:  http:192.168.10.119:8761/,http:192.168.10.119:8762/

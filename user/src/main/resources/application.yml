@@ -1,0 +1,51 @@
+server:
+  port: 7001
+  
+spring:
+  application:
+    name: user
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://seq:123@eurekaserver1:8761/eureka/,http://seq:123@eurekaserver2:8762/eureka/
+  instance:
+    instance-id: ${spring.application.name}:${server.port}
+#Feign 日志级别  
+logging:
+  level:
+    com.ss.user.feign.UserFeign: DEBUG
+    
+feign:  #如果在feign里面使用hystrix。则需要配置成true
+  hystrix:
+    enable: false
+    
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000  #这个配置解决超时的问题 全局的
+    hystrixMethod:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 6000  #配置指定某一个方法的超时问题     
+#turbine:
+#  aggregator:
+#    clusterConfig:  ORDER
+#  appConfig:  order
+#通过yml配置文件的方式配置Ribbon
+#order:  #注册进Eureka中的服务id
+#  ribbon:
+#    NFLoadBalancerRuleClassName:  com.netflix.loadbalancer.RandomRule
+
+#脱离Eureka启用Ribbon
+
+#ribbon:
+#  eureka:
+#   enabled: false
+#order:
+#  ribbon:
+#    listOfServers:  localhost:7000,localhost:7002

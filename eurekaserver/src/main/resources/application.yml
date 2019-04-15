@@ -1,0 +1,53 @@
+server:
+  port: 8761  #eureka默认端口号8761
+
+spring:
+  application:
+    name: eureka-server #给当前eureka服务命名
+  profiles: server1
+    
+
+eureka:
+  instance: #eureka实例
+    hostname: eurekaserver1 #eureka实例的主机名字
+    instance-id: ${spring.application.name}:${server.port}
+  client:
+    register-with-eureka: true #表示是否将自己注册到eureka server 默认为true
+    fetch-registry: true   #表示是否从eureka server获取注册信息 默认为true
+    service-url:    #eureka server的地址
+      defaultZone:  http://seq:123@eurekaserver2:8762/eureka/
+      
+security:
+  basic:
+    enabled: true   #eureka启用安全认证
+  user:
+    name: seq
+    password: 123
+
+---
+
+server:
+  port: 8762  #eureka默认端口号8761
+
+spring:
+  application:
+    name: eureka-server #给当前eureka服务命名
+  profiles: server2
+
+eureka:
+  instance: #eureka实例
+    hostname: eurekaserver2 #eureka实例的主机名字
+    instance-id: ${spring.application.name}:${server.port}
+  client:
+    register-with-eureka: true #表示是否将自己注册到eureka server 默认为true
+    fetch-registry: true   #表示是否从eureka server获取注册信息 默认为true
+    service-url:    #eureka server的地址
+      defaultZone:  http://seq:123@eurekaserver1:8761/eureka/
+      
+security:
+  basic:
+    enabled: true   #eureka启用安全认证
+  user:
+    name: seq
+    password: 123
+    

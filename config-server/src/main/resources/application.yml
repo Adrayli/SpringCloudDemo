@@ -1,0 +1,23 @@
+server:
+  port: 20000
+  
+spring:
+  application:
+    name: config
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/Adrayli/springcloudconfig.git
+          username: Adrayli
+          password: ldpqwe123ade
+          basedir:  f:\\github\basedir
+            
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://seq:123@eurekaserver1:8761/eureka/
+  instance:
+    instance-id: ${spring.application.name}:${server.port}
+    
